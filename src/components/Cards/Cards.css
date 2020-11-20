@@ -1,0 +1,44 @@
+.loading {
+  margin: 30px auto;
+}
+
+.container {
+  margin: 30px auto;
+  justify-content: center;
+  /* background-color: blanchedalmond; */
+}
+
+.confirmed {
+  border-bottom: 10px solid grey;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.show-percentage {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.percentage {
+  margin-left: 10px;
+}
+
+.active {
+  border-bottom: 10px solid rgba(0, 0, 255, 0.5);
+}
+
+.recovered{
+  border-bottom: 10px solid rgba(0, 255, 0, 0.5);
+}
+
+.deaths{
+  border-bottom: 10px solid rgba(255, 0, 0, 0.5);
+}
