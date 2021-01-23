@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cards, Chart, CountryPicker } from './components';
+import { Cards, Chart, CountryPicker, ErrorPage } from './components';
 import * as fetchAPI from './api/index';
 import logo from './images/logo.png';
 import Typography from '@material-ui/core/Typography';
@@ -17,6 +17,7 @@ class App extends React.Component {
         dailyData: null,
         country: '',
         selected: false,
+        hasAPIError: false,
     }
 
     handleCountryChange = async (country) => {
@@ -34,16 +35,28 @@ class App extends React.Component {
         this.setState({ currentTotalData, dailyData, country, selected: true });
     }
 
+    handleAPIError = () => {
+        console.log("API Error");
+        this.setState({ hasAPIError: true });
+    }
+
 
     render() {
-        const { currentTotalData, dailyData, selected } = this.state;
+        const { currentTotalData, dailyData, selected, hasAPIError } = this.state;
         let result;
-        if (currentTotalData && dailyData) {
+
+        if (hasAPIError) { 
             result = 
                 <div className={styles.container}>
-                    <img className={styles.image} src={logo} alt='COVID-19'/>
+                    <ErrorPage /> 
+                </div>
+        }
+
+        else if (currentTotalData && dailyData) {
+            result = 
+                <div className={styles.container}>
                     <Cards data={currentTotalData} />
-                    <CountryPicker handleCountryChange={this.handleCountryChange} />
+                    <CountryPicker handleCountryChange={this.handleCountryChange} handleAPIError={this.handleAPIError}/>
                     <Chart data={dailyData} />
                 </div>
         } 
@@ -52,29 +65,28 @@ class App extends React.Component {
             if (selected) {
                 result = 
                 <div className={styles.container}>
-                    <img className={styles.image} src={logo} alt='COVID-19'/>
-                    <Typography variant="h4" component="h4" class='query-text'>
+                    <Typography variant="h4" component="h4" className='query-text mt-3'>
                         Sorry, there is no data of this country
                     </Typography>
-                    <CountryPicker handleCountryChange={this.handleCountryChange} />
+                    <CountryPicker handleCountryChange={this.handleCountryChange} handleAPIError={this.handleAPIError}/>
                 </div>
 
             }
             else {
                 result = 
                 <div className={styles.container}>
-                    <img className={styles.image} src={logo} alt='COVID-19'/>
-                    <Typography variant="h4" component="h4" class='query-text'>
+                    <Typography variant="h4" component="h4" className='query-text mt-3'>
                         Please select a country
                     </Typography>
-                    <CountryPicker handleCountryChange={this.handleCountryChange} />
+                    <CountryPicker handleCountryChange={this.handleCountryChange} handleAPIError={this.handleAPIError}/>
                 </div>
             }
         }
     
         return (
             <div className={styles.container}>
-                {result}
+                <img className={styles.image} src={logo} alt='COVID-19'/>
+                { result }
             </div>
         )
     }

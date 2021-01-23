@@ -5,12 +5,16 @@ import styles from './CountryPicker.module.css';
 
 import { fetchCountries } from '../../api/index'
 
-const CountryPicker = ({ handleCountryChange }) => {
+const CountryPicker = ({ handleCountryChange, handleAPIError }) => {
     const [countries, setCountries] = useState([]);
 
     useEffect(() => {
         (async function() {
             const countries = await fetchCountries();
+            if (!countries) {
+                handleAPIError(); // immediately invoked function
+                return;
+            }
             setCountries(countries);
         })();
 

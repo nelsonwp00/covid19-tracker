@@ -16,8 +16,6 @@ const Cards = (data) => {
     totalRecovered = Recovered;
     lastDate = Date;
     
-
-
     return (
         <div>
             <Grid container className='container'>

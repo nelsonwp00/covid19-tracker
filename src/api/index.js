@@ -16,6 +16,7 @@ const fetchCountries = async () => {
     } 
     catch (error) {
         console.log(error);
+        return false;
     }
 }
 
